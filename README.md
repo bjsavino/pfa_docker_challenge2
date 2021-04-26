@@ -8,7 +8,7 @@ Gere uma imagem do nginx que seja capaz que receber as solicitações http e enc
 
 Crie um repositório no github com todo o fonte do programa e das imagens geradas.
 
-Crie um arquivo README.md especificando quais comandos precisamos executar para que a aplicação funcione recebendo as solicitações na porta 8080 de nosso computador. Lembrando que NÃO utilizaremos Docker-compose nesse desafio.
+Crie um arquivo README.md especificando quais comandos precisamos executar para que a aplicação funcione recebendo as solicitações na porta http://localhost:8080 de nosso computador. Lembrando que NÃO utilizaremos Docker-compose nesse desafio.
 
 ## ⏩ Quickstart
 
@@ -43,6 +43,9 @@ docker run --rm -d --network pfa-docker --name pfa-nodeserver bjsavino/pfa-nodes
 docker run --rm -d --network pfa-docker -p 8080:80 --name pfa-nginx bjsavino/pfa-nginx
 ```
 
+Ao final, você poderá testar a aplicação em http://localhost:8080
+
+</br>
 
 ## 🚧 Construindo imagens (opcional)
 Você pode executar os comandos acima e baixar as imagens diretamente do dockerHub. Se, por algum motivo, for necessário recriar as imagens, siga os comando abaixo
