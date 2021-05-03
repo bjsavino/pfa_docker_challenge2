@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const path = require('path');
 
 const configMysql = {
-    host:"pfa-mysql",
+    host:"mysql",
     user:"root",
     password:"root",
     database:"nodedb",

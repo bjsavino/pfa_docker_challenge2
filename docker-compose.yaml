@@ -1,0 +1,38 @@
+version: '3'
+services: 
+    mysql:
+        image: mysql:8
+        environment: 
+            - MYSQL_ROOT_PASSWORD=root
+            - LANG=C.UTF-8
+        volumes:
+            - ./mysql:/docker-entrypoint-initdb.d/
+            - ./dbdata:/var/lib/mysql/
+        expose: 
+            - 3306
+            - 33060
+        networks: 
+            - node-mysql
+    
+    nodeserver:
+        build: ./node
+        depends_on: 
+            - mysql
+        networks:
+            - node-mysql
+            - nginx-node
+    
+    nginx:
+        build: ./nginx
+        ports:
+            - 8090:80    
+            - 8080:80
+        depends_on:
+            - nodeserver
+        networks:
+            - nginx-node
+networks:
+    node-mysql:
+        driver: bridge
+    nginx-node:
+        driver: bridge

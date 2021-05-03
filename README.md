@@ -2,56 +2,32 @@
 
 ## Desafio
 
-Crie um programa utilizando sua linguagem de programação favorita que faça uma listagem simples do nome de alguns módulos do curso Full Cycle os trazendo de um banco de dados MySQL. Gere a imagem desse container e a publique no DockerHub.
+Aproveite o desafio 1 que você criou no PFA, a aplicação com sua linguagem favorita, Nginx e MySQL para aplicar o Docker Compose.
 
-Gere uma imagem do nginx que seja capaz que receber as solicitações http e encaminhá-las para o container.
+Crie o docker-compose.yaml com 3 serviços, um para cada tecnologia. Você deverá configurar os seguintes pontos:
 
-Crie um repositório no github com todo o fonte do programa e das imagens geradas.
+- O serviço do MySQL não poderá ter um Dockerfile personalizado, é necessário usar diretamente a imagem oficial do MySQL e deverá existir um volume para persistir o banco de dados no projeto, o nome da pasta será dbdata. Deverá usar o entrypoint-initdb.d para já criar um banco e popular dados no banco de dados padrão.
 
-Crie um arquivo README.md especificando quais comandos precisamos executar para que a aplicação funcione recebendo as solicitações na porta http://localhost:8080 de nosso computador. Lembrando que NÃO utilizaremos Docker-compose nesse desafio.
+- O serviço da sua linguagem favorita deverá continuando a listar dados através da WEB vindo do MySQL. Antes do container iniciar ele deverá verificar se o MySQL já está pronto para conexão, sugerimos usar o Dockerize para fazer esta verificação.
 
-## ⏩ Quickstart
+- O serviço do Nginx continuará sendo um proxy reverso para a sua aplicação da linguagem favorita e deverá expor a porta 8000 para acessar a aplicação no browser. Este serviço deverá iniciar somente quando o da sua aplicação da linguagem favorita for iniciado e deverá ser reiniciado automaticamente caso a aplicação da linguagem favorita não esteja rodando ainda.
 
-Você pode executar o script <strong>init.sh</strong> para iniciar de maneira mais simples. Caso sinta necessidade, siga os comandos em execução para iniciar um container de cada vez.
+- Os serviços do MySQL e da linguagem favorita devem ter uma rede compartilhada que o Nginx não enxergue e linguagem favorita e Nginx devem ter uma rede compartilhada que o MySQL não enxergue.
+
+Para corrigir seu projeto rodaremos apenas o comando "docker-compose up", tudo já deve ser levantado e estar disponível ao fazer isto, teste bastante isto antes de enviar o desafio para correção.
+
+Divirtam-se e bom trabalho!
+
+## ⏩ Subindo a Aplicação
+
+Para rodar a aplicação, basta clonar o repositório pra sua máquina e executar o docker-compose:
 ```
-./init.sh
-```
-## ✍ Execução Manual
-Primeiramente, será necessário criar a network para que os containers consigam se conectar entre si.
-
-```
-docker network create pfa-docker 
-```
-
-Segundo passo é rodar cada imagem abaixo:
-
-### Banco de Dados MYSQL
-
-```
-docker run --rm -d --network pfa-docker --name pfa-mysql bjsavino/pfa-mysql
+docker-compose up
 ```
 
-### Aplicação
-
-```
-docker run --rm -d --network pfa-docker --name pfa-nodeserver bjsavino/pfa-nodeserver
-```
-
-### NGINX
-
-```
-docker run --rm -d --network pfa-docker -p 8080:80 --name pfa-nginx bjsavino/pfa-nginx
-```
-
-Ao final, você poderá testar a aplicação em http://localhost:8080
-
-</br>
-
-## 🚧 Construindo imagens (opcional)
-Você pode executar os comandos acima e baixar as imagens diretamente do dockerHub. Se, por algum motivo, for necessário recriar as imagens, siga os comando abaixo
-
-```
-docker build -t bjsavino/pfa-mysql ./mysql  
-docker build -t bjsavino/pfa-nodeserver ./node
-docker build -t bjsavino/pfa-nginx ./nginx  
-```
+## 🧪 Tecnologias utilizadas
+ - Docker
+ - Dockerize
+ - Nginx
+ - Nodejs
+ - Express
